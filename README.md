@@ -11,7 +11,7 @@ Author: Harry He
 
 https://user-images.githubusercontent.com/69978107/192068745-bdf301f6-554f-4682-bc72-a28b6ba2ef54.mp4
 
-A video demonstration of how the game is played and some of the features that it provides.
+A video demonstration of how the game is played and some of the features that it provides. Sound included!
 
 ## Installation and Running
 
