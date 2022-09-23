@@ -9,7 +9,7 @@ Author: Harry He
 	- Coded in Python 3.8.5 using Pygame.
 	- Attempts to provide a fluid tennis experience in recreating Wii Sports Tennis.
 
-https://user-images.githubusercontent.com/69978107/192064082-78e1c3df-5d30-47d6-b15e-7ba7f321e994.mp4
+https://user-images.githubusercontent.com/69978107/192068745-bdf301f6-554f-4682-bc72-a28b6ba2ef54.mp4
 
 A video demonstration of how the game is played and some of the features that it provides.
 
