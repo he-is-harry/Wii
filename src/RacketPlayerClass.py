@@ -14,7 +14,7 @@
 # Importing some of the assets needed to run the classes
 import pygame
 import os
-from pygame.compat import geterror
+from pygame import get_error
 from pygame.math import Vector2
 import math
 
@@ -31,7 +31,7 @@ def load_image(name, colorkey=None):
         image = pygame.image.load(fullname)
     except pygame.error:
         print("Cannot load image:", fullname)
-        raise SystemExit(str(geterror()))
+        raise SystemExit(str(get_error()))
     image = image.convert()
     if colorkey is not None:
         if colorkey == -1:
@@ -53,14 +53,15 @@ def load_image(name, colorkey=None):
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image, self.rect = load_image("MiiBack.bmp", (255, 255, 255))
+        self.image, self.rect = load_image("../res/MiiBack.bmp", (255, 255, 255))
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.rect = self.image.get_rect()
         self.rect.center = pos
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         self.shadow_screen = pygame.Surface((screen.get_size()))
-        self.shadow_screen = self.shadow_screen.convert()
+        self.shadow_screen = self.shadow_screen.convert_alpha()
+        self.shadow_screen.fill((0, 0, 0, 0))
         self.height = 35
         pygame.draw.circle(self.shadow_screen, (0, 0, 0),
                            (self.rect.centerx,
@@ -72,6 +73,8 @@ class Player(pygame.sprite.Sprite):
             newpos = self.rect.move((dx, 0))
         self.rect = newpos
         self.shadow_screen = pygame.Surface((self.area.w, self.area.h))
+        self.shadow_screen = self.shadow_screen.convert_alpha()
+        self.shadow_screen.fill((0, 0, 0, 0))
         pygame.draw.circle(self.shadow_screen, (0, 0, 0),
                            (self.rect.centerx,
                             self.rect.centery + self.height), 20)
@@ -112,7 +115,7 @@ class Racket(pygame.sprite.Sprite):
     def __init__(self, pos, distance):
         pygame.sprite.Sprite.__init__(self)
         # Or use super().__init__()
-        self.org_image, self.rect = load_image("TennisRacket.bmp", (255, 255, 255))
+        self.org_image, self.rect = load_image("../res/TennisRacket.bmp", (255, 255, 255))
         #self.org_w, self.org_h = self.org_image.get_size()
         self.org_image = pygame.transform.scale(self.org_image, (100, 100))
         self.image = self.org_image

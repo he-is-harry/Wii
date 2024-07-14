@@ -9,15 +9,14 @@ import math
 import threading
 import time
 import sys
-for path in sys.path:
-    print(path)
+# for path in sys.path:
+#     print(path)
 from random import randint
-from GAME import Racket
-from GAME import Ball
-from GAME import Player
-from GAME import Enemy
-from GAME import Menu
-from GAME import Effects
+from RacketPlayerClass import Player, Racket
+from BallClass import Ball
+from EnemyClass import Enemy
+from MenuClass import Menu
+from EffectsClass import Effects
 
 # Initializing pygame
 pygame.init()
@@ -105,20 +104,22 @@ pygame.draw.line(tennis_court, (0, 0, 0), (95, 500), (705, 500), 5)
 # Score
 # Initializing the scoreboard system
 # Including the score, and the number or rounds each side has won
-scoreBoard = pygame.Surface(screen.get_size())
-scoreBoard = scoreBoard.convert()
+scoreBoard = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
+scoreBoard = scoreBoard.convert_alpha()
+scoreBoard.fill((0, 0, 0, 0))
 for i in range(numRounds):
     pygame.draw.circle(scoreBoard, (255, 255, 255), (25, 55 + 50 * i), 25, width = 5)
 for i in range(numRounds):
     pygame.draw.circle(scoreBoard, (255, 255, 255), (775, 55 + 50 * i), 25, width = 5)
-scoreBoard.set_alpha(100)
+# scoreBoard.set_alpha(100)
 
-wiiFont = pygame.font.Font("contm.ttf", 50)
+main_dir = os.path.split(os.path.abspath(__file__))[0]
+wiiFont = pygame.font.Font(os.path.join(main_dir, "../res/contm.ttf"), 50)
 scoreDisplay = wiiFont.render(str(playerScore) + " : " + str(compScore), True, (255, 255, 255))
 scoreRect = scoreDisplay.get_rect(center=(400, 20))
 screen.blit(scoreDisplay, scoreRect)
 
-smallerWiiFont = pygame.font.Font("contm.ttf", 25)
+smallerWiiFont = pygame.font.Font(os.path.join(main_dir, "../res/contm.ttf"), 25)
 playerScoreIcon = smallerWiiFont.render("Player", True, (255, 255, 255))
 playerScoreRect = playerScoreIcon.get_rect(topleft=(0, 0))
 compScoreIcon = smallerWiiFont.render("Computer", True, (255, 255, 255))
@@ -126,7 +127,7 @@ compScoreRect = compScoreIcon.get_rect(topright=(795, 0))
 
 # Initializing the ending message strip
 # This is the message that is shown after the game is over
-endingFont = pygame.font.Font("contb.ttf", 100)
+endingFont = pygame.font.Font(os.path.join(main_dir, "../res/contb.ttf"), 100)
 endMessage = endingFont.render("YOU WIN", True, (255, 215, 0))
 endRect = endMessage.get_rect(center=(400, 500))
 strip_screen = pygame.Surface(screen.get_size())
@@ -950,12 +951,13 @@ while(not quitted):
                                     compRounds = 0
                                     backToMenuDelay = 300
                                     scoreBoard = pygame.Surface(screen.get_size())
-                                    scoreBoard = scoreBoard.convert()
+                                    scoreBoard = scoreBoard.convert_alpha()
+                                    scoreBoard.fill((0, 0, 0, 0))
                                     for i in range(numRounds):
                                         pygame.draw.circle(scoreBoard, (255, 255, 255), (25, 55 + 50 * i), 25, width=5)
                                     for i in range(numRounds):
                                         pygame.draw.circle(scoreBoard, (255, 255, 255), (775, 55 + 50 * i), 25, width=5)
-                                    scoreBoard.set_alpha(255)
+                                    # scoreBoard.set_alpha(255)
                                     soundEffects.isPlayingWinLose = False
                                     soundEffects.start.play()
                                     gameState = 1

@@ -8,7 +8,7 @@
 # Importing some of the assets needed to run the class
 import os
 import pygame
-from pygame.compat import geterror
+from pygame import get_error
 
 # This variable stores the path in which the game is currently
 # in. This is used to load sounds later.
@@ -29,7 +29,7 @@ def load_sound(name):
         sound = pygame.mixer.Sound(fullname)
     except pygame.error:
         print("Cannot load sound: %s" % fullname)
-        raise SystemExit(str(geterror()))
+        raise SystemExit(str(get_error()))
     return sound
 
 # The Effects Class
@@ -51,20 +51,20 @@ def load_sound(name):
 # progress in the song to be kept.
 class Effects:
     def __init__(self):
-        pygame.mixer.music.load("WiiTheme.wav")
+        pygame.mixer.music.load(os.path.join(main_dir, "../res/WiiTheme.wav"))
         pygame.mixer.music.set_volume(0.15)
-        self.ding = load_sound("DingSounds.wav")
-        self.hit = load_sound("HitSound.wav")
-        self.net = load_sound("NetSound.wav")
-        self.winning = load_sound("WinningSound.wav")
-        self.losing = load_sound("LosingSound.wav")
-        self.back = load_sound("BackSound.wav")
+        self.ding = load_sound("../res/DingSounds.wav")
+        self.hit = load_sound("../res/HitSound.wav")
+        self.net = load_sound("../res/NetSound.wav")
+        self.winning = load_sound("../res/WinningSound.wav")
+        self.losing = load_sound("../res/LosingSound.wav")
+        self.back = load_sound("../res/BackSound.wav")
         self.back.set_volume(0.2)
-        self.select = load_sound("SelectSound.wav")
+        self.select = load_sound("../res/SelectSound.wav")
         self.select.set_volume(0.5)
-        self.score = load_sound("ScoreSound.wav")
-        self.start = load_sound("StartSound.wav")
-        self.bounce = load_sound("BounceSound.wav")
+        self.score = load_sound("../res/ScoreSound.wav")
+        self.start = load_sound("../res/StartSound.wav")
+        self.bounce = load_sound("../res/BounceSound.wav")
         self.isPlayingTheme = False
         self.isPlayingWinLose = False
         self.isPlayingNet = False
@@ -73,7 +73,7 @@ class Effects:
     def playTheme(self):
         self.isPlayingTheme = True
         if(self.firstTime):
-            pygame.mixer.music.queue("WiiTheme.wav")
+            pygame.mixer.music.queue(os.path.join(main_dir, "../res/WiiTheme.wav"))
             pygame.mixer.music.play(-1)
             self.firstTime = False
         else:

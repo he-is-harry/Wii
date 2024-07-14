@@ -10,7 +10,7 @@
 # Importing some of the assets needed to run the class
 import pygame
 import os
-from pygame.compat import geterror
+from pygame import get_error
 import math
 from random import randint
 
@@ -27,7 +27,7 @@ def load_image(name, colorkey=None):
         image = pygame.image.load(fullname)
     except pygame.error:
         print("Cannot load image:", fullname)
-        raise SystemExit(str(geterror()))
+        raise SystemExit(str(get_error()))
     image = image.convert()
     if colorkey is not None:
         if colorkey == -1:
@@ -113,14 +113,15 @@ def load_image(name, colorkey=None):
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image, self.rect = load_image("MiiFront.bmp", (255, 255, 255))
+        self.image, self.rect = load_image("../res/MiiFront.bmp", (255, 255, 255))
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.rect = self.image.get_rect()
         self.rect.center = pos
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         self.shadow_screen = pygame.Surface((screen.get_size()))
-        self.shadow_screen = self.shadow_screen.convert()
+        self.shadow_screen = self.shadow_screen.convert_alpha()
+        self.shadow_screen.fill((0, 0, 0, 0))
         self.height = 35
         pygame.draw.circle(self.shadow_screen, (0, 0, 0),
                            (self.rect.centerx,
@@ -139,6 +140,8 @@ class Enemy(pygame.sprite.Sprite):
             newpos = self.rect.move((dx, 0))
         self.rect = newpos
         self.shadow_screen = pygame.Surface((self.area.w, self.area.h))
+        self.shadow_screen = self.shadow_screen.convert_alpha()
+        self.shadow_screen.fill((0, 0, 0, 0))
         pygame.draw.circle(self.shadow_screen, (0, 0, 0),
                            (self.rect.centerx,
                             self.rect.centery + self.height), 20)

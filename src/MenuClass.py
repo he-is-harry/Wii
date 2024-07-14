@@ -10,7 +10,7 @@
 # Importing some of the assets needed to run the class
 import pygame
 import os
-from pygame.compat import geterror
+from pygame import get_error
 
 # This variable stores the path in which the game is currently
 # in. This is used to load images later.
@@ -25,7 +25,7 @@ def load_image(name, colorkey=None):
         image = pygame.image.load(fullname)
     except pygame.error:
         print("Cannot load image:", fullname)
-        raise SystemExit(str(geterror()))
+        raise SystemExit(str(get_error()))
     image = image.convert()
     if colorkey is not None:
         if colorkey == -1:
@@ -64,19 +64,19 @@ class Menu():
         # to go to the play, how to play, controls, and about page.
         # It also allows the user to quit the game.
 
-        self.mainBackground, self.backRect = load_image("WiiBackground.bmp")
-        self.menuMessageFont = pygame.font.Font("contm.ttf", 30)
+        self.mainBackground, self.backRect = load_image("../res/WiiBackground.bmp")
+        self.menuMessageFont = pygame.font.Font(os.path.join(main_dir, "../res/contm.ttf"), 30)
         self.menuMessage = self.menuMessageFont.render("Main Menu", True, (255, 255, 255))
         self.menuMessageRect = self.menuMessage.get_rect(center=(85, 72))
 
-        self.menuCaptionFont = pygame.font.Font("contb.ttf", 40)
+        self.menuCaptionFont = pygame.font.Font(os.path.join(main_dir, "../res/contb.ttf"), 40)
         self.menuCaptionLeft = self.menuCaptionFont.render("Wii", True, (102, 102, 102))
         self.menuCaptionLeftRect = self.menuCaptionLeft.get_rect(center=(646, 72))
         self.menuCaptionRight = self.menuCaptionFont.render("Tennis", True, (100, 168, 199))
         self.menuCaptionRightRect = self.menuCaptionLeft.get_rect(center=(700, 72))
 
-        self.smallWiiFont = pygame.font.Font("contm.ttf", 25)
-        self.tinyWiiFont = pygame.font.Font("contm.ttf", 20)
+        self.smallWiiFont = pygame.font.Font(os.path.join(main_dir, "../res/contm.ttf"), 25)
+        self.tinyWiiFont = pygame.font.Font(os.path.join(main_dir, "../res/contm.ttf"), 20)
         self.mainButtons = []
         self.mainButtons.append(Button((160, 200), 300, 120, self.smallWiiFont, "Play"))
         self.mainButtons.append(Button((160, 325), 300, 120, self.smallWiiFont, "How To Play"))
@@ -89,11 +89,11 @@ class Menu():
         # be the slide shown in the display.
         self.curSlide = 0
         self.slideshow = []
-        self.slideshow.append(Slide((550, 300), "Slide1.bmp"))
-        self.slideshow.append(Slide((550, 300), "Slide2.bmp"))
-        self.slideshow.append(Slide((550, 300), "Slide3.bmp"))
-        self.slideshow.append(Slide((550, 300), "Slide4.bmp"))
-        self.slideshow.append(Slide((550, 300), "Slide5.bmp"))
+        self.slideshow.append(Slide((550, 300), "../res/Slide1.bmp"))
+        self.slideshow.append(Slide((550, 300), "../res/Slide2.bmp"))
+        self.slideshow.append(Slide((550, 300), "../res/Slide3.bmp"))
+        self.slideshow.append(Slide((550, 300), "../res/Slide4.bmp"))
+        self.slideshow.append(Slide((550, 300), "../res/Slide5.bmp"))
 
         # Play Page
         # The play page holds the buttons to customize the user's
@@ -246,13 +246,13 @@ class Menu():
         # It also allows the user to press the A and D buttons
         # like in the real game where you press the A and B buttons to access
         # the real main menu
-        self.titleBackground, self.titleRect = load_image("TitleBackground.bmp")
-        self.titleCaptionFont = pygame.font.Font("contb.ttf", 170)
+        self.titleBackground, self.titleRect = load_image("../res/TitleBackground.bmp")
+        self.titleCaptionFont = pygame.font.Font(os.path.join(main_dir, "../res/contb.ttf"), 170)
         self.titleCaptionLeft = self.titleCaptionFont.render("Wii", True, (102, 102, 102))
         self.titleCaptionLeftRect = self.titleCaptionLeft.get_rect(center=(172, 390))
         self.titleCaptionRight = self.titleCaptionFont.render("Tennis", True, (101, 168, 199))
         self.titleCaptionRightRect = self.titleCaptionRight.get_rect(center=(528, 390))
-        self.checkCaptionFont = pygame.font.Font("contm.ttf", 40)
+        self.checkCaptionFont = pygame.font.Font(os.path.join(main_dir, "../res/contm.ttf"), 40)
         self.checkMessage = self.checkCaptionFont.render("Please press   A   and   D  .", True, (102, 102, 102))
         self.checkMessageRect = self.checkMessage.get_rect(center=(330, 760))
         self.keyDisplays = []
@@ -421,8 +421,8 @@ class Menu():
 # including its message.
 class Button():
     def __init__(self, pos, width, height, font, message):
-        self.org_image, self.rect = load_image("BaseRect.bmp", (255, 255, 255))
-        self.hig_image, self.rect = load_image("HighlightedRect.bmp", (255, 255, 255))
+        self.org_image, self.rect = load_image("../res/BaseRect.bmp", (255, 255, 255))
+        self.hig_image, self.rect = load_image("../res/HighlightedRect.bmp", (255, 255, 255))
         self.image = pygame.transform.scale(self.org_image, (width, height))
         self.rect = self.image.get_rect(center=pos)
         self.caption = font.render(message, True, (0, 0, 0))
